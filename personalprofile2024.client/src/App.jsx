@@ -20,7 +20,7 @@ function App() {
                     <a href="#contact">Contact</a>
                 </nav>
             </header>
-            <main>
+            <main className="App-content">
                 <Home />
                 <Skills />
                 <Experience />
