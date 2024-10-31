@@ -1,0 +1,65 @@
+﻿/* src/App.css */
+.App {
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+.App-header {
+    background-color: #282c34;
+    width: 100%;
+    color: white;
+    position: fixed;
+    top: 0;
+    z-index: 1;
+}
+
+@media (min-width: 768px) { /* Adjust the breakpoint as needed */
+    .html {
+        width: 800px; /* Width for desktop */
+        left: 50%; /* Center the header */
+        transform: translateX(-50%); /* Centering adjustment */
+    }
+}
+
+nav {
+    margin-bottom: 10px;
+}
+
+nav a {
+    color: #61dafb;
+    margin: 0 10px;
+    text-decoration: none;
+}
+
+.content {
+    border-top: solid 2px #e1e1e1;
+    padding: 20px; /* Add padding for content */
+}
+
+footer {
+    background-color: #282c34;
+    color: white;
+    padding: 10px; /* Add padding for footer */
+}
+
+main {
+    margin-top: 120px; /* Ensures content is below the header */
+    padding: 20px; /* Add padding for main content */
+}
+
+/* Adjustments for mobile view */
+@media (max-width: 768px) {
+    main {
+        margin-top: 80px; /* Adjust margin for smaller screens if needed */
+    }
+}
+
+html {
+    scroll-padding-top: 120px; /* height of sticky header */
+}
+
+ul {
+    list-style-type: none;
+    padding: 0; /* Remove default padding */
+    margin: 0; /* Remove default margin */
+}
