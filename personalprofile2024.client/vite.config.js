@@ -1,11 +1,13 @@
 import { fileURLToPath, URL } from 'node:url';
-
 import { defineConfig } from 'vite';
 import plugin from '@vitejs/plugin-react';
 import fs from 'fs';
 import path from 'path';
 import child_process from 'child_process';
 import { env } from 'process';
+
+// Determine if we're in a CI environment
+const isCI = env.GITHUB_ACTIONS === 'true';
 
 const baseFolder =
     env.APPDATA !== undefined && env.APPDATA !== ''
@@ -16,7 +18,8 @@ const certificateName = "personalprofile2024.client";
 const certFilePath = path.join(baseFolder, `${certificateName}.pem`);
 const keyFilePath = path.join(baseFolder, `${certificateName}.key`);
 
-if (!fs.existsSync(certFilePath) || !fs.existsSync(keyFilePath)) {
+// Only attempt to create the certificate if not in CI
+if (!isCI && (!fs.existsSync(certFilePath) || !fs.existsSync(keyFilePath))) {
     if (0 !== child_process.spawnSync('dotnet', [
         'dev-certs',
         'https',
@@ -49,9 +52,9 @@ export default defineConfig({
             }
         },
         port: 5173,
-        https: {
+        https: isCI ? false : { // Disable HTTPS in CI
             key: fs.readFileSync(keyFilePath),
             cert: fs.readFileSync(certFilePath),
-        }
+        },
     }
-})
+});
