@@ -36,3 +36,32 @@ jobs:
         name: ASP-app
         path: 'personalprofile2024.client/dist/**'
 
+  deploy:
+    runs-on: windows-latest
+    needs: build-and-deploy
+    environment:
+      name: 'Production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+    permissions:
+      id-token: write #This is required for requesting the JWT
+
+    steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v4
+        with:
+          name: ASP-app
+      
+      - name: Login to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_97289C9ED92C40ADB720FCC2EA27FD8C }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_8C8EDEA58A2040448B9D9F916F27ACC6 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_1BD02134812D44E98694641D5B454DAE }}
+
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: 'narikeprofile2024'
+          slot-name: 'Production'
+          package: .
