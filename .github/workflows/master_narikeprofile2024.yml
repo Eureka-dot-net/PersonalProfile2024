@@ -1,0 +1,31 @@
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
+name: Build and deploy ASP app to Azure Web App - narikeprofile2024
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16'  # Ensure compatibility with your app
+
+    - name: Install Dependencies
+      run: npm install
+      working-directory: personalprofile2024.client
+      
+    - name: Build Project
+      run: npm run build
+      working-directory: personalprofile2024.client
